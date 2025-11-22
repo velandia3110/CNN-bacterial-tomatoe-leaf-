@@ -4,11 +4,11 @@ from tensorflow.keras import layers
 import os
 
 # Parámetros
-DATA_DIR = "dataset/processed"
+DATA_DIR = "dataset_raw/tomato"
 IMAGE_SIZE = (256,256)
-BATCH_SIZE = 10
+BATCH_SIZE = 32
 NUM_CLASSES = 2
-EPOCHS = 60
+EPOCHS = 40
 MODEL_DIR = "models"
 os.makedirs(MODEL_DIR, exist_ok=True)
 
@@ -27,19 +27,11 @@ val_ds = tf.keras.preprocessing.image_dataset_from_directory(
     label_mode='categorical',
     shuffle=False
 )
-test_ds = tf.keras.preprocessing.image_dataset_from_directory(
-    os.path.join(DATA_DIR,"test"),
-    image_size=IMAGE_SIZE,
-    batch_size=BATCH_SIZE,
-    label_mode='categorical',
-    shuffle=False
-)
 
 # Precarga de datos para rendimiento
 AUTOTUNE = tf.data.AUTOTUNE
 train_ds = train_ds.prefetch(AUTOTUNE)
 val_ds = val_ds.prefetch(AUTOTUNE)
-test_ds = test_ds.prefetch(AUTOTUNE)
 
 # Aumento durante ejecución
 data_augmentation = keras.Sequential([

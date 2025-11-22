@@ -2,3 +2,5 @@ models/
 dataset/
 files.py
 venv/
+dataset_raw/
+sources.py
